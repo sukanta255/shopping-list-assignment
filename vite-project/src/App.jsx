@@ -5,6 +5,7 @@ import ItemList from './components/ItemList';
 
 const App = () => {
   const [items, setItems] = useState([]);
+  const [filterText, setFilterText] = useState('');
 
   const addItem = (itemName) => {
     const newItem = {
@@ -26,7 +27,18 @@ const App = () => {
     <div>
       <h1>Shopping List</h1>
       <AddItemForm addItem={addItem} />
-      <ItemList items={items} togglePurchased={togglePurchased} />
+      <input
+        type="text"
+        placeholder="Filter Categories"
+        value={filterText}
+        onChange={(e) => setFilterText(e.target.value)}
+      />
+      <ItemList
+        items={items.filter((item) =>
+          item.name.toLowerCase().includes(filterText.toLowerCase())
+        )}
+        togglePurchased={togglePurchased}
+      />
     </div>
   );
 };
